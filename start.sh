@@ -56,18 +56,6 @@ elif [[ $1 == "--update" ]]; then
     exit 0
 fi
 
-#check that OS arch is armhf
-ARCH="`uname -m`"
-if [[ $ARCH == "armv7l" ]] || [[ $ARCH == "arm64" ]] || [[ $ARCH == "aarch64" ]]; then
-    if [ ! -z "$(file "$(readlink -f "/sbin/init")" | grep 64)" ];then
-        error "This script doesn't work on arm64!"
-    elif [ ! -z "$(file "$(readlink -f "/sbin/init")" | grep 32)" ];then
-        echo -e "arch is armhf/armv7l $(tput setaf 2)✔︎$(tput sgr 0)"
-    else
-        error "Failed to detect OS CPU architecture! Something is very wrong."
-    fi
-fi
-
 #check that checkinstall is installed, if not ask to install it.
 if ! command -v checkinstall >/dev/null ; then
     read -p "checkinstall is required but not installed, do you want to install it? (y/n)?" choice
